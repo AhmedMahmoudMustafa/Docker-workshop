@@ -11,18 +11,33 @@ The goal of this module was to:
 ---
 
 ## 📂 Repository Structure
-.
-├── Homework/ # Module 1 homework (Docker & SQL)
-│ ├── data_ingestion.py # CLI script to load data into Postgres
-│ ├── docker-compose.yml # Postgres + pgAdmin (provided by course)
-│ ├── data/ # Local data (ignored by git)
-│ └── README.md # Homework answers + SQL queries
-│
-├── pipeline/ # Practice code from the module tutorials
-├── DOCKER_ARCHITECTURE.md # Notes on Docker concepts and architecture
-└── README.md # This file
 
-> **Note:** Raw data files (CSV / Parquet) are intentionally excluded from version control and must be downloaded locally.
+```
+.
+├── Homework/
+│   ├── README.md              # Module 1 homework answers (Docker & SQL)
+│   ├── data_ingestion.py      # CLI script to load data into PostgreSQL
+│   ├── docker-compose.yml     # Postgres + pgAdmin (provided by the course)
+│   ├── data/                  # Local datasets (ignored by git)
+│   │   ├── green_tripdata_2025-11.parquet
+│   │   └── taxi_zone_lookup.csv
+│   ├── pyproject.toml         # Python dependencies (uv)
+│   └── uv.lock                # Dependency lock file
+│
+├── pipeline/                  # Practice code from module tutorials
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   ├── ingest_data.py
+│   ├── ingest_lookup_data.py
+│   ├── pipeline.py
+│   └── notebook.ipynb
+│
+├── DOCKER_ARCHITECTURE.md     # Notes on Docker concepts & architecture
+└── README.md                  # Repository overview (this file)
+```
+
+> **Note:** Raw data files (CSV / Parquet) are intentionally excluded from version control  
+> and must be downloaded locally as described in the homework.
 
 ---
 
