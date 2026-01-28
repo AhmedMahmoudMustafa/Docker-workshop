@@ -4,6 +4,7 @@
 import pandas as pd
 from sqlalchemy import create_engine
 from tqdm.auto import tqdm
+import click
 # !uv add tqdm
 #!uv add sqlalchemy psycopg2-binary
 
@@ -35,18 +36,17 @@ parse_dates = [
 
 # print(pd.io.sql.get_schema(df, name='yellow_taxi_data', con=engine))
 
-def run():
-        year = 2021
-        month = 1
-
-        pg_user = 'root'
-        pg_password = 'root'
-        pg_host = 'localhost'
-        pg_db = 'ny_taxi'
-        pg_port = 5432
-        
-        chunksize=100000
-        target_table = 'yellow_taxi_data'
+@click.command()
+@click.option('--year', default=2021, type=int, help='Year for the data')
+@click.option('--month', default=1, type=int, help='Month for the data')
+@click.option('--pg-user', default='root', help='PostgreSQL username')
+@click.option('--pg-password', default='root', help='PostgreSQL password')
+@click.option('--pg-host', default='localhost', help='PostgreSQL host')
+@click.option('--pg-db', default='ny_taxi', help='PostgreSQL database name')
+@click.option('--pg-port', default=5432, type=int, help='PostgreSQL port')
+@click.option('--chunksize', default=100000, type=int, help='Chunk size for reading CSV')
+@click.option('--target-table', default='yellow_taxi_data', help='Target table name')
+def run(year, month, pg_user, pg_password, pg_host, pg_db, pg_port, chunksize, target_table):
 
         # Read a sample of the data
         prefix = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/'
@@ -75,7 +75,7 @@ def run():
         first = True
         for df_chunk in tqdm(df_iter):
             if first:
-                print(f"Creating table with {len(df_chunk)} columns")
+                print(f"Creating table with {len(df_chunk)} rows")
                 df_chunk.head(n=0).to_sql(
                     name=target_table, 
                     con=engine,
@@ -90,5 +90,6 @@ def run():
                 if_exists='append'
             )
             print(f"Inserted: {len(df_chunk)} rows")
+
 if __name__ == '__main__':
     run()

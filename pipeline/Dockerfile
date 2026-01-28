@@ -16,6 +16,6 @@ ENV PATH="/app/.venv/bin:$PATH"
 # Install dependencies from lock file (ensures reproducible builds)
 RUN uv sync --locked
 
-COPY pipeline.py pipeline.py
+COPY ingest_data.py ingest_lookup_data.py ./
 
-ENTRYPOINT [ "python", "pipeline.py" ]
+ENTRYPOINT ["python"]
